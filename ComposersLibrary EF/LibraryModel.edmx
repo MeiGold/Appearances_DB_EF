@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBLibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="COMPOSER">
+          <Key>
+            <PropertyRef Name="CMP_ID" />
+          </Key>
+          <Property Name="CMP_ID" Type="int" Nullable="false" />
+          <Property Name="CMP_FULL_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="CMP_NATIONALITY" Type="nvarchar" MaxLength="50" />
+          <Property Name="CMP_BIRTH_DATE" Type="date" />
+        </EntityType>
+        <EntityType Name="COMPOSERS_SONGS">
+          <Key>
+            <PropertyRef Name="CS_CMP" />
+            <PropertyRef Name="CS_S" />
+          </Key>
+          <Property Name="CS_CMP" Type="int" Nullable="false" />
+          <Property Name="CS_S" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PERFORMANCE">
+          <Key>
+            <PropertyRef Name="PRF_ID" />
+          </Key>
+          <Property Name="PRF_ID" Type="int" Nullable="false" />
+          <Property Name="PRF_PERFORMER_ID" Type="int" Nullable="false" />
+          <Property Name="PRF_SONG_ID" Type="int" Nullable="false" />
+          <Property Name="PRF_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="PRF_DATE" Type="date" />
+          <Property Name="PRF_PLACE" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PERFORMER">
+          <Key>
+            <PropertyRef Name="PF_ID" />
+          </Key>
+          <Property Name="PF_ID" Type="int" Nullable="false" />
+          <Property Name="PF_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="PF_DATE_OF_BIRTH" Type="datetime" />
+          <Property Name="PF_NATIONALITY" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SONG">
+          <Key>
+            <PropertyRef Name="SNG_ID" />
+          </Key>
+          <Property Name="SNG_ID" Type="int" Nullable="false" />
+          <Property Name="SNG_CMP_ID" Type="nvarchar" MaxLength="50" />
+          <Property Name="SNG_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="SNG_GENRE" Type="nvarchar" MaxLength="50" />
+          <Property Name="SNG_DURATION" Type="time" Precision="7" />
+          <Property Name="SNG_PPS_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="SONG_COLLECTION">
+          <Key>
+            <PropertyRef Name="SNGC_ID" />
+          </Key>
+          <Property Name="SNGC_ID" Type="int" Nullable="false" />
+          <Property Name="SNGC_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="SNGC_COLLECTOR" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="СSONG">
+          <Key>
+            <PropertyRef Name="СSNG_ID" />
+          </Key>
+          <Property Name="СSNG_ID" Type="int" Nullable="false" />
+          <Property Name="СSNG_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="СSNG_PUBLISHING_YEAR" Type="date" />
+        </EntityType>
+        <Association Name="FK_COMPOSERS_SONGS_COMPOSITOR1">
+          <End Role="COMPOSER" Type="Self.COMPOSER" Multiplicity="1" />
+          <End Role="COMPOSERS_SONGS" Type="Self.COMPOSERS_SONGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COMPOSER">
+              <PropertyRef Name="CMP_ID" />
+            </Principal>
+            <Dependent Role="COMPOSERS_SONGS">
+              <PropertyRef Name="CS_CMP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COMPOSERS_SONGS_SONG">
+          <End Role="SONG" Type="Self.SONG" Multiplicity="1" />
+          <End Role="COMPOSERS_SONGS" Type="Self.COMPOSERS_SONGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SONG">
+              <PropertyRef Name="SNG_ID" />
+            </Principal>
+            <Dependent Role="COMPOSERS_SONGS">
+              <PropertyRef Name="CS_S" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERFORMANCE_PERFORMER">
+          <End Role="PERFORMER" Type="Self.PERFORMER" Multiplicity="1" />
+          <End Role="PERFORMANCE" Type="Self.PERFORMANCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERFORMER">
+              <PropertyRef Name="PF_ID" />
+            </Principal>
+            <Dependent Role="PERFORMANCE">
+              <PropertyRef Name="PRF_PERFORMER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERFORMANCE_SONG">
+          <End Role="SONG" Type="Self.SONG" Multiplicity="1" />
+          <End Role="PERFORMANCE" Type="Self.PERFORMANCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SONG">
+              <PropertyRef Name="SNG_ID" />
+            </Principal>
+            <Dependent Role="PERFORMANCE">
+              <PropertyRef Name="PRF_SONG_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SONG_SONG_COLLECTION">
+          <End Role="SONG_COLLECTION" Type="Self.SONG_COLLECTION" Multiplicity="0..1" />
+          <End Role="SONG" Type="Self.SONG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SONG_COLLECTION">
+              <PropertyRef Name="SNGC_ID" />
+            </Principal>
+            <Dependent Role="SONG">
+              <PropertyRef Name="SNG_PPS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_СSONG_SONG">
+          <End Role="SONG" Type="Self.SONG" Multiplicity="1" />
+          <End Role="СSONG" Type="Self.СSONG" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SONG">
+              <PropertyRef Name="SNG_ID" />
+            </Principal>
+            <Dependent Role="СSONG">
+              <PropertyRef Name="СSNG_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBLibraryModelStoreContainer">
+          <EntitySet Name="COMPOSER" EntityType="Self.COMPOSER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="COMPOSERS_SONGS" EntityType="Self.COMPOSERS_SONGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERFORMANCE" EntityType="Self.PERFORMANCE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERFORMER" EntityType="Self.PERFORMER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SONG" EntityType="Self.SONG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SONG_COLLECTION" EntityType="Self.SONG_COLLECTION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="СSONG" EntityType="Self.СSONG" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_COMPOSERS_SONGS_COMPOSITOR1" Association="Self.FK_COMPOSERS_SONGS_COMPOSITOR1">
+            <End Role="COMPOSER" EntitySet="COMPOSER" />
+            <End Role="COMPOSERS_SONGS" EntitySet="COMPOSERS_SONGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMPOSERS_SONGS_SONG" Association="Self.FK_COMPOSERS_SONGS_SONG">
+            <End Role="SONG" EntitySet="SONG" />
+            <End Role="COMPOSERS_SONGS" EntitySet="COMPOSERS_SONGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERFORMANCE_PERFORMER" Association="Self.FK_PERFORMANCE_PERFORMER">
+            <End Role="PERFORMER" EntitySet="PERFORMER" />
+            <End Role="PERFORMANCE" EntitySet="PERFORMANCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERFORMANCE_SONG" Association="Self.FK_PERFORMANCE_SONG">
+            <End Role="SONG" EntitySet="SONG" />
+            <End Role="PERFORMANCE" EntitySet="PERFORMANCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SONG_SONG_COLLECTION" Association="Self.FK_SONG_SONG_COLLECTION">
+            <End Role="SONG_COLLECTION" EntitySet="SONG_COLLECTION" />
+            <End Role="SONG" EntitySet="SONG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_СSONG_SONG" Association="Self.FK_СSONG_SONG">
+            <End Role="SONG" EntitySet="SONG" />
+            <End Role="СSONG" EntitySet="СSONG" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBLibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="COMPOSER">
+          <Key>
+            <PropertyRef Name="CMP_ID" />
+          </Key>
+          <Property Name="CMP_ID" Type="Int32" Nullable="false" />
+          <Property Name="CMP_FULL_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CMP_NATIONALITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CMP_BIRTH_DATE" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="SONGs" Relationship="Self.COMPOSERS_SONGS" FromRole="COMPOSER" ToRole="SONG" />
+        </EntityType>
+        <EntityType Name="PERFORMANCE">
+          <Key>
+            <PropertyRef Name="PRF_ID" />
+          </Key>
+          <Property Name="PRF_ID" Type="Int32" Nullable="false" />
+          <Property Name="PRF_PERFORMER_ID" Type="Int32" Nullable="false" />
+          <Property Name="PRF_SONG_ID" Type="Int32" Nullable="false" />
+          <Property Name="PRF_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PRF_DATE" Type="DateTime" Precision="0" />
+          <Property Name="PRF_PLACE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PERFORMER" Relationship="Self.FK_PERFORMANCE_PERFORMER" FromRole="PERFORMANCE" ToRole="PERFORMER" />
+          <NavigationProperty Name="SONG" Relationship="Self.FK_PERFORMANCE_SONG" FromRole="PERFORMANCE" ToRole="SONG" />
+        </EntityType>
+        <EntityType Name="PERFORMER">
+          <Key>
+            <PropertyRef Name="PF_ID" />
+          </Key>
+          <Property Name="PF_ID" Type="Int32" Nullable="false" />
+          <Property Name="PF_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PF_DATE_OF_BIRTH" Type="DateTime" Precision="3" />
+          <Property Name="PF_NATIONALITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PERFORMANCEs" Relationship="Self.FK_PERFORMANCE_PERFORMER" FromRole="PERFORMER" ToRole="PERFORMANCE" />
+        </EntityType>
+        <EntityType Name="SONG">
+          <Key>
+            <PropertyRef Name="SNG_ID" />
+          </Key>
+          <Property Name="SNG_ID" Type="Int32" Nullable="false" />
+          <Property Name="SNG_CMP_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SNG_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SNG_GENRE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SNG_DURATION" Type="Time" Precision="7" />
+          <Property Name="SNG_PPS_ID" Type="Int32" />
+          <NavigationProperty Name="PERFORMANCEs" Relationship="Self.FK_PERFORMANCE_SONG" FromRole="SONG" ToRole="PERFORMANCE" />
+          <NavigationProperty Name="SONG_COLLECTION" Relationship="Self.FK_SONG_SONG_COLLECTION" FromRole="SONG" ToRole="SONG_COLLECTION" />
+          <NavigationProperty Name="СSONG" Relationship="Self.FK_СSONG_SONG" FromRole="SONG" ToRole="СSONG" />
+          <NavigationProperty Name="COMPOSERs" Relationship="Self.COMPOSERS_SONGS" FromRole="SONG" ToRole="COMPOSER" />
+        </EntityType>
+        <EntityType Name="SONG_COLLECTION">
+          <Key>
+            <PropertyRef Name="SNGC_ID" />
+          </Key>
+          <Property Name="SNGC_ID" Type="Int32" Nullable="false" />
+          <Property Name="SNGC_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SNGC_COLLECTOR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SONGs" Relationship="Self.FK_SONG_SONG_COLLECTION" FromRole="SONG_COLLECTION" ToRole="SONG" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="СSONG">
+          <Key>
+            <PropertyRef Name="СSNG_ID" />
+          </Key>
+          <Property Name="СSNG_ID" Type="Int32" Nullable="false" />
+          <Property Name="СSNG_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="СSNG_PUBLISHING_YEAR" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="SONG" Relationship="Self.FK_СSONG_SONG" FromRole="СSONG" ToRole="SONG" />
+        </EntityType>
+        <Association Name="FK_PERFORMANCE_PERFORMER">
+          <End Role="PERFORMER" Type="Self.PERFORMER" Multiplicity="1" />
+          <End Role="PERFORMANCE" Type="Self.PERFORMANCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERFORMER">
+              <PropertyRef Name="PF_ID" />
+            </Principal>
+            <Dependent Role="PERFORMANCE">
+              <PropertyRef Name="PRF_PERFORMER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERFORMANCE_SONG">
+          <End Role="SONG" Type="Self.SONG" Multiplicity="1" />
+          <End Role="PERFORMANCE" Type="Self.PERFORMANCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SONG">
+              <PropertyRef Name="SNG_ID" />
+            </Principal>
+            <Dependent Role="PERFORMANCE">
+              <PropertyRef Name="PRF_SONG_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SONG_SONG_COLLECTION">
+          <End Role="SONG_COLLECTION" Type="Self.SONG_COLLECTION" Multiplicity="0..1" />
+          <End Role="SONG" Type="Self.SONG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SONG_COLLECTION">
+              <PropertyRef Name="SNGC_ID" />
+            </Principal>
+            <Dependent Role="SONG">
+              <PropertyRef Name="SNG_PPS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_СSONG_SONG">
+          <End Role="SONG" Type="Self.SONG" Multiplicity="1" />
+          <End Role="СSONG" Type="Self.СSONG" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SONG">
+              <PropertyRef Name="SNG_ID" />
+            </Principal>
+            <Dependent Role="СSONG">
+              <PropertyRef Name="СSNG_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="COMPOSERS_SONGS">
+          <End Role="COMPOSER" Type="Self.COMPOSER" Multiplicity="*" />
+          <End Role="SONG" Type="Self.SONG" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DBLibraryEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="COMPOSERs" EntityType="Self.COMPOSER" />
+          <EntitySet Name="PERFORMANCEs" EntityType="Self.PERFORMANCE" />
+          <EntitySet Name="PERFORMERs" EntityType="Self.PERFORMER" />
+          <EntitySet Name="SONGs" EntityType="Self.SONG" />
+          <EntitySet Name="SONG_COLLECTION" EntityType="Self.SONG_COLLECTION" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="СSONG" EntityType="Self.СSONG" />
+          <AssociationSet Name="FK_PERFORMANCE_PERFORMER" Association="Self.FK_PERFORMANCE_PERFORMER">
+            <End Role="PERFORMER" EntitySet="PERFORMERs" />
+            <End Role="PERFORMANCE" EntitySet="PERFORMANCEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERFORMANCE_SONG" Association="Self.FK_PERFORMANCE_SONG">
+            <End Role="SONG" EntitySet="SONGs" />
+            <End Role="PERFORMANCE" EntitySet="PERFORMANCEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SONG_SONG_COLLECTION" Association="Self.FK_SONG_SONG_COLLECTION">
+            <End Role="SONG_COLLECTION" EntitySet="SONG_COLLECTION" />
+            <End Role="SONG" EntitySet="SONGs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_СSONG_SONG" Association="Self.FK_СSONG_SONG">
+            <End Role="SONG" EntitySet="SONGs" />
+            <End Role="СSONG" EntitySet="СSONG" />
+          </AssociationSet>
+          <AssociationSet Name="COMPOSERS_SONGS" Association="Self.COMPOSERS_SONGS">
+            <End Role="COMPOSER" EntitySet="COMPOSERs" />
+            <End Role="SONG" EntitySet="SONGs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBLibraryModelStoreContainer" CdmEntityContainer="DBLibraryEntities1">
+          <EntitySetMapping Name="COMPOSERs">
+            <EntityTypeMapping TypeName="DBLibraryModel.COMPOSER">
+              <MappingFragment StoreEntitySet="COMPOSER">
+                <ScalarProperty Name="CMP_ID" ColumnName="CMP_ID" />
+                <ScalarProperty Name="CMP_FULL_NAME" ColumnName="CMP_FULL_NAME" />
+                <ScalarProperty Name="CMP_NATIONALITY" ColumnName="CMP_NATIONALITY" />
+                <ScalarProperty Name="CMP_BIRTH_DATE" ColumnName="CMP_BIRTH_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERFORMANCEs">
+            <EntityTypeMapping TypeName="DBLibraryModel.PERFORMANCE">
+              <MappingFragment StoreEntitySet="PERFORMANCE">
+                <ScalarProperty Name="PRF_ID" ColumnName="PRF_ID" />
+                <ScalarProperty Name="PRF_PERFORMER_ID" ColumnName="PRF_PERFORMER_ID" />
+                <ScalarProperty Name="PRF_SONG_ID" ColumnName="PRF_SONG_ID" />
+                <ScalarProperty Name="PRF_NAME" ColumnName="PRF_NAME" />
+                <ScalarProperty Name="PRF_DATE" ColumnName="PRF_DATE" />
+                <ScalarProperty Name="PRF_PLACE" ColumnName="PRF_PLACE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERFORMERs">
+            <EntityTypeMapping TypeName="DBLibraryModel.PERFORMER">
+              <MappingFragment StoreEntitySet="PERFORMER">
+                <ScalarProperty Name="PF_ID" ColumnName="PF_ID" />
+                <ScalarProperty Name="PF_NAME" ColumnName="PF_NAME" />
+                <ScalarProperty Name="PF_DATE_OF_BIRTH" ColumnName="PF_DATE_OF_BIRTH" />
+                <ScalarProperty Name="PF_NATIONALITY" ColumnName="PF_NATIONALITY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SONGs">
+            <EntityTypeMapping TypeName="DBLibraryModel.SONG">
+              <MappingFragment StoreEntitySet="SONG">
+                <ScalarProperty Name="SNG_ID" ColumnName="SNG_ID" />
+                <ScalarProperty Name="SNG_CMP_ID" ColumnName="SNG_CMP_ID" />
+                <ScalarProperty Name="SNG_NAME" ColumnName="SNG_NAME" />
+                <ScalarProperty Name="SNG_GENRE" ColumnName="SNG_GENRE" />
+                <ScalarProperty Name="SNG_DURATION" ColumnName="SNG_DURATION" />
+                <ScalarProperty Name="SNG_PPS_ID" ColumnName="SNG_PPS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SONG_COLLECTION">
+            <EntityTypeMapping TypeName="DBLibraryModel.SONG_COLLECTION">
+              <MappingFragment StoreEntitySet="SONG_COLLECTION">
+                <ScalarProperty Name="SNGC_ID" ColumnName="SNGC_ID" />
+                <ScalarProperty Name="SNGC_NAME" ColumnName="SNGC_NAME" />
+                <ScalarProperty Name="SNGC_COLLECTOR" ColumnName="SNGC_COLLECTOR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DBLibraryModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="СSONG">
+            <EntityTypeMapping TypeName="DBLibraryModel.СSONG">
+              <MappingFragment StoreEntitySet="СSONG">
+                <ScalarProperty Name="СSNG_ID" ColumnName="СSNG_ID" />
+                <ScalarProperty Name="СSNG_NAME" ColumnName="СSNG_NAME" />
+                <ScalarProperty Name="СSNG_PUBLISHING_YEAR" ColumnName="СSNG_PUBLISHING_YEAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="COMPOSERS_SONGS" TypeName="DBLibraryModel.COMPOSERS_SONGS" StoreEntitySet="COMPOSERS_SONGS">
+            <EndProperty Name="COMPOSER">
+              <ScalarProperty Name="CMP_ID" ColumnName="CS_CMP" />
+            </EndProperty>
+            <EndProperty Name="SONG">
+              <ScalarProperty Name="SNG_ID" ColumnName="CS_S" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

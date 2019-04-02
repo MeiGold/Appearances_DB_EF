@@ -32,8 +32,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>iconfinder_letter_A_red_1553029.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,14 +56,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Appearance DB App.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Appearance DB App.Designer.cs">
+      <DependentUpon>Appearance DB App.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Composers Search.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Composers Search.Designer.cs">
+      <DependentUpon>Composers Search.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Performances Search.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Performances Search.Designer.cs">
+      <DependentUpon>Performances Search.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Performers Search.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Performers Search.Designer.cs">
+      <DependentUpon>Performers Search.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Song Search.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Song Search.Designer.cs">
+      <DependentUpon>Song Search.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Appearance DB App.resx">
+      <DependentUpon>Appearance DB App.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Composers Search.resx">
+      <DependentUpon>Composers Search.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Performances Search.resx">
+      <DependentUpon>Performances Search.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Performers Search.resx">
+      <DependentUpon>Performers Search.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,7 +108,16 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Song Search.resx">
+      <DependentUpon>Song Search.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\ComposersLibrary_EF.COMPOSER.datasource" />
+    <None Include="Properties\DataSources\ComposersLibrary_EF.PERFORMANCE.datasource" />
+    <None Include="Properties\DataSources\ComposersLibrary_EF.PERFORMER.datasource" />
+    <None Include="Properties\DataSources\ComposersLibrary_EF.SONG.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,6 +130,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\photo_2019-03-16_21-11-41.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Untitled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\multicolor-bright-music-background-notes-blurry-lights-48074667.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\f40325b6-4a8c-4075-ac2d-a0d04429fe2d.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ComposersLibrary EF\ComposersLibrary EF.csproj">
+      <Project>{cc084bae-253b-44c3-91ba-78623f749709}</Project>
+      <Name>ComposersLibrary EF</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1521283512-31922056.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="iconfinder_letter_A_red_1553029.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
