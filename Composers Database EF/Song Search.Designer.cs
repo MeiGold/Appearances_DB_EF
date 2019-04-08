@@ -217,6 +217,7 @@
             this.XMLButton.TabIndex = 10;
             this.XMLButton.Text = "Transform to XML";
             this.XMLButton.UseVisualStyleBackColor = true;
+            this.XMLButton.Click += new System.EventHandler(this.XMLButton_Click);
             // 
             // Song_Search
             // 

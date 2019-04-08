@@ -243,7 +243,6 @@ namespace Composers_Database_EF
 
         }
 
-
         private void PerformersDateTimePicker_OnTextChange(object sender, EventArgs e)
         {
             // Saving the 'Selected Date on Calendar' into DataGridView current cell

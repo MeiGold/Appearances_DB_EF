@@ -68,6 +68,7 @@
     <Compile Include="Composers Search.Designer.cs">
       <DependentUpon>Composers Search.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateXml.cs" />
     <Compile Include="Performances Search.cs">
       <SubType>Form</SubType>
     </Compile>

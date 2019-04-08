@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using System.Data.Entity;
 using ComposersLibrary_EF;
 
@@ -14,6 +15,7 @@ namespace Composers_Database_EF
 {
     public partial class Song_Search : Form
     {
+        public IQueryable<SONG> query;
         private ComposersLibrary_EF.DBLibraryEntities1 obj;
         public Song_Search()
         {
@@ -23,7 +25,7 @@ namespace Composers_Database_EF
         {
             obj = new ComposersLibrary_EF.DBLibraryEntities1();
 
-            var query = (from c in obj.SONGs
+            query = (from c in obj.SONGs
                          select c);
             if (!String.IsNullOrWhiteSpace(NameTextBox.Text))
             {
@@ -66,5 +68,32 @@ namespace Composers_Database_EF
         {
             FindSong();
         }
+
+        private void XMLButton_Click(object sender, EventArgs e)
+        {
+            if (query == null)
+            {
+                MessageBox.Show("There is nothing to transform!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+            OpenFile();
+
+            //string path = CreateXml.Create(query);
+        }
+        public void OpenFile()
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "All files(*.*)|*.*";
+            if (save.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+                //return "";
+            }
+            string path = save.FileName;
+            CreateXml.Create(query, path);
+            MessageBox.Show("File was successfully created!", "Notification", MessageBoxButtons.OK);
+            //return FileName;
+        }
+
     }
 }
